@@ -12,8 +12,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		27C9ECF529959326008D1050 /* CalendarManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C9ECF429959326008D1050 /* CalendarManagerBridge.m */; };
-		27C9ECF82995934E008D1050 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9ECF72995934E008D1050 /* CalendarManager.swift */; };
+		27496E29299C04AB0078BC54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27496E28299C04AB0078BC54 /* Assets.xcassets */; };
+		27C9ECF529959326008D1050 /* CardManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C9ECF429959326008D1050 /* CardManagerBridge.m */; };
+		27C9ECF82995934E008D1050 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9ECF72995934E008D1050 /* CardManager.swift */; };
 		7699B88040F8A987B510C191 /* libPods-COEMobile-COEMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-COEMobile-COEMobileTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -39,9 +40,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = COEMobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = COEMobile/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-COEMobile-COEMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-COEMobile-COEMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		27C9ECF429959326008D1050 /* CalendarManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarManagerBridge.m; sourceTree = "<group>"; };
-		27C9ECF62995934E008D1050 /* CalendarManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarManager-Bridging-Header.h"; sourceTree = "<group>"; };
-		27C9ECF72995934E008D1050 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
+		27496E28299C04AB0078BC54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		27C9ECF429959326008D1050 /* CardManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardManagerBridge.m; sourceTree = "<group>"; };
+		27C9ECF62995934E008D1050 /* CardManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardManager-Bridging-Header.h"; sourceTree = "<group>"; };
+		27C9ECF72995934E008D1050 /* CardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-COEMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COEMobile.debug.xcconfig"; path = "Target Support Files/Pods-COEMobile/Pods-COEMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-COEMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COEMobile.release.xcconfig"; path = "Target Support Files/Pods-COEMobile/Pods-COEMobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-COEMobile-COEMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COEMobile-COEMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-COEMobile-COEMobileTests/Pods-COEMobile-COEMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				27496E28299C04AB0078BC54 /* Assets.xcassets */,
 			);
 			name = COEMobile;
 			sourceTree = "<group>";
@@ -105,19 +108,19 @@
 		27C9ECF229959302008D1050 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				27C9ECF329959308008D1050 /* Calendar */,
+				27C9ECF329959308008D1050 /* Card */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		27C9ECF329959308008D1050 /* Calendar */ = {
+		27C9ECF329959308008D1050 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				27C9ECF429959326008D1050 /* CalendarManagerBridge.m */,
-				27C9ECF72995934E008D1050 /* CalendarManager.swift */,
-				27C9ECF62995934E008D1050 /* CalendarManager-Bridging-Header.h */,
+				27C9ECF429959326008D1050 /* CardManagerBridge.m */,
+				27C9ECF72995934E008D1050 /* CardManager.swift */,
+				27C9ECF62995934E008D1050 /* CardManager-Bridging-Header.h */,
 			);
-			path = Calendar;
+			path = Card;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -267,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				27496E29299C04AB0078BC54 /* Assets.xcassets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,8 +441,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				27C9ECF82995934E008D1050 /* CalendarManager.swift in Sources */,
-				27C9ECF529959326008D1050 /* CalendarManagerBridge.m in Sources */,
+				27C9ECF82995934E008D1050 /* CardManager.swift in Sources */,
+				27C9ECF529959326008D1050 /* CardManagerBridge.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,7 +532,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = COEMobile;
-				SWIFT_OBJC_BRIDGING_HEADER = "Modules/Calendar/CalendarManager-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Modules/Card/CardManager-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -555,7 +559,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = COEMobile;
-				SWIFT_OBJC_BRIDGING_HEADER = "Modules/Calendar/CalendarManager-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Modules/Card/CardManager-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

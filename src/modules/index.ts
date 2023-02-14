@@ -1,0 +1,1 @@
+export {CardModule} from './CardManager';
