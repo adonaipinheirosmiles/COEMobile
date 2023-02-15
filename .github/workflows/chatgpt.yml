@@ -6,13 +6,5 @@ jobs:
   chatgpt:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: |
-        npm install --force
-    - name: Install dependencies Python
-      run: |
-         pip install aiohttp openai os requests json
-    - name: Run ChatGPT
-      run: |
-        python chatgpt.py
+      - name: ChatGPT Integration
+      uses: kxxt/chatgpt-action@v0.3
