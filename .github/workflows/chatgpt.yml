@@ -4,9 +4,6 @@ on: [pull_request]
 
 jobs:
   pr_commented:
-    if: |
-      github.event.issue.pull_request &&
-      startsWith(github.event.comment.body, 'openai')
     name: Review PR
     runs-on: ubuntu-latest
     steps:
