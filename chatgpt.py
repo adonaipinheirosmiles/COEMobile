@@ -53,7 +53,7 @@ def get_review():
   REPO = pr_link.split("/")[-3]
   PR_NUMBER = pr_link.split("/")[-1]
 
-  response = requests.post(f'https://api.github.com/repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments', headers=headers, data=data)
+  response = requests.post(f'https://api.github.com/repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments', headers=headers, data=data)
   print(response.json())
 
 
