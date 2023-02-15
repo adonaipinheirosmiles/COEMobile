@@ -11,7 +11,7 @@ export default function Dashboard() {
   return (
     <Background>
       <HeaderButton />
-      <Text style={styles.title}>Olá, {cardName}</Text>
+      <Text style={styles.title}>Olá, {cardName}!</Text>
       <Card cardInfo={cardInfo} />
       <FeatureList data={features} />
       <Footer />
