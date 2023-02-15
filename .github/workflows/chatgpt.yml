@@ -1,29 +1,18 @@
-name: Review PR with OpenAI GPT model
-
 on: [pull_request]
 
+name: ChatGPT CodeReview
+
 jobs:
-  pr_commented:
-    name: Review PR
+  chatgpt_comment:
     runs-on: ubuntu-latest
+    name: Let chatgpt comment on your PR.
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - name: ChatGPT Integration - Open AI Key
+        uses: adonaipinheirosmiles/chatgpt-action@v0.6
+        id: chatgpt
         with:
-          python-version: 3.8
-      - name: Install
-        run: |
-          sudo apt-get update
-          python3 -m venv .env
-          source .env/bin/activate
-          python -m pip install -U pip
-          pip install -r requirements.txt
-      - name: Review PR and make comment
-        run: |
-          source .env/bin/activate
-          echo "LINK=https://github.com/${{ github.repository }}/pull/${{ github.event.issue.number }}" >> $GITHUB_ENV
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
-          echo "GITHUB_TOKEN=${{ github.token }}" >> $GITHUB_ENV
-          echo "GITHUB_ACTOR=${{ github.actor }}" >> $GITHUB_ENV
-          python chatgpt.py
+          number: ${{ github.event.pull_request.number }}
+          apiKey: ${{ secrets.OPENAI_API_KEY }}
+          split: 'yolo'  # Use true to enable the unstable split feature.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
