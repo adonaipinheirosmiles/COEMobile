@@ -12,7 +12,7 @@ jobs:
         npm install --force
     - name: Install dependencies Python
       run: |
-         pip install openai
+         pip install aiohttp openai os requests json
     - name: Run ChatGPT
       run: |
         python chatgpt.py
