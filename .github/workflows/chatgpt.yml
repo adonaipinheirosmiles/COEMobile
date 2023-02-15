@@ -1,23 +1,16 @@
-on: [pull_request]
+name: ChatGPT Review
 
-name: ChatGPT CodeReview
+on: [pull_request]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  openai_api_key: ${{ secrets.openai_api_key }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
 jobs:
-  chatComment:
+  chatgpt-review:
+    name: ChatGPT Review
     runs-on: ubuntu-latest
-    name: ChatGPT explain code
     steps:
-      - name: ChatGTP explain code
-        uses: cirolini/chatgpt-github-actions@v1.3
-        with:
-          openai_api_key: ${{ secrets.openai_api_key }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_pr_id: ${{ github.event.number }}
-          openai_engine: "text-davinci-002" #optional
-          openai_temperature: 0.5 #optional
-          openai_max_tokens: 2048 #optional
-          mode: patch # file or patch 
+    - uses: feiskyer/ChatGPT-Reviewer@v0.3
+      name: ChatGPT Review
+      
