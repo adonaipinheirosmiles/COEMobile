@@ -16,3 +16,4 @@ jobs:
           split: 'yolo'  # Use true to enable the unstable split feature.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHATGPT_SESSION_TOKEN: ${{ secrets.CHATGPT_SESSION_TOKEN }}
