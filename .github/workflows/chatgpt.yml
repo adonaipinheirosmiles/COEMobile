@@ -2,6 +2,10 @@ on: [pull_request]
 
 name: ChatGPT CodeReview
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
 jobs:
   chatgpt_comment:
     runs-on: ubuntu-latest
@@ -14,6 +18,4 @@ jobs:
           number: ${{ github.event.pull_request.number }}
           apiKey: ${{ secrets.OPENAI_API_KEY }}
           split: 'yolo'  # Use true to enable the unstable split feature.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        
