@@ -2,6 +2,10 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  INPUT_OPENAI_API_KEY: ${{ secrets.INPUT_OPENAI_API_KEY }}
+
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
