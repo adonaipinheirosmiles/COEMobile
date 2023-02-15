@@ -4,6 +4,7 @@ name: ChatGPT CodeReview
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  openai_api_key: ${{ secrets.openai_api_key }}
 
 jobs:
   chatComment:
