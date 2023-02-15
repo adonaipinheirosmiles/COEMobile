@@ -1,0 +1,15 @@
+name: ChatGPT
+
+on: [pull_request]
+
+jobs:
+  chatgpt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        npm install
+    - name: Run ChatGPT
+      run: |
+        python chatgpt.py
