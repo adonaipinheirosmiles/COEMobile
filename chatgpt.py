@@ -1,51 +1,61 @@
-import openai
 import os
 import requests
 import json
 
-# Configura a chave de API da OpenAI
-openai.api_key = os.environ["OPENAI_API_KEY"]
+import openai
 
-# Função que usa o ChatGPT para avaliar o código
-def evaluate_code(code):
-    # Define a entrada para o modelo GPT-3 da OpenAI
-    prompt = (f"Please evaluate this code:\n{code}\n\n"
-              f"Score the code from 1 to 10, with 1 being the worst and 10 being the best.\n"
-              f"Comment on the strengths and weaknesses of the code.")
-    # Realiza uma solicitação à API do modelo GPT-3 para obter a avaliação do código
-    response = openai.Completion.create(
-        engine="davinci-codex",
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.7,
-    )
-    # Extrai a resposta do modelo GPT-3 e retorna os dados relevantes
-    rating = response.choices[0].text.split("\n")[0]
-    comment = "\n".join(response.choices[0].text.split("\n")[1:])
-    return rating, comment
 
-# Função que adiciona comentários ao PR
-def add_comment(pr_url, comment):
-    # Define o cabeçalho e o corpo da solicitação para adicionar um comentário ao PR
-    headers = {'Authorization': 'Bearer ' + os.environ["GITHUB_TOKEN"]}
-    data = {'body': comment}
-    # Realiza a solicitação à API do GitHub para adicionar um comentário ao PR
-    response = requests.post(pr_url + "/comments", headers=headers, json=data)
-    return response.status_code
+WHITELIST = [] # move this to github actions (probably some 'uses' I don't know about
+
+
+def get_review():
+  github_env = os.getenv("GITHUB_ENV")
+  with open(github_env, "r") as f:
+    variables = dict([line.split("=") for line in f.read().splitlines()])
+
+  if variables["GITHUB_ACTOR"] not in WHITELIST: # only run review for whitelisted users
+      return
+
+  pr_link = variables["LINK"]
+  openai.api_key = variables["OPENAI_API_KEY"]
+
+  request_link = "https://patch-diff.githubusercontent.com/raw/" + pr_link[len("https://github.com/"):] + ".patch"
+  patch = requests.get(request_link).text
+
+  question = "\n Você pode analisar este GitHub Pull Request para mim? E comentar em português?"
+  prompt = patch[:4096 - len(question)] + question
+
+  # model = "text-ada-001"
+  model = "text-davinci-003"
+  response = openai.Completion.create(
+    engine=model,
+    prompt=prompt,
+    temperature=0.5,
+    max_tokens=256,
+    top_p=1.0,
+    frequency_penalty=0.0,
+    presence_penalty=0.0
+  )
+  review = response['choices'][0]['text']
+
+  ACCESS_TOKEN = variables["GITHUB_TOKEN"]
+  headers = {
+    'Accept': 'application/vnd.github+json',
+    'Authorization': f'Bearer {ACCESS_TOKEN}',
+    'Content-Type': 'application/x-www-form-urlencoded',
+  }
+
+  data = {"body": review}
+  data = json.dumps(data)
+
+
+  OWNER = pr_link.split("/")[-4]
+  REPO = pr_link.split("/")[-3]
+  PR_NUMBER = pr_link.split("/")[-1]
+
+  response = requests.post(f'https://api.github.com/repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments', headers=headers, data=data)
+  print(response.json())
+
 
 if __name__ == "__main__":
-    # Obtém a URL do pull request do ambiente
-    pr_url = os.environ["GITHUB_SERVER_URL"] + os.environ["GITHUB_REPOSITORY"] + "/pulls/" + os.environ["PULL_REQUEST_NUMBER"]
-    # Obtém o nome do arquivo do ambiente
-    filename = os.environ["INPUT_FILE_NAME"]
-    # Obtém o caminho completo do arquivo
-    filepath = os.path.join(os.getcwd(), filename)
-    # Lê o código a ser avaliado do arquivo
-    with open(filepath, 'r') as f:
-        code = f.read()
-    # Avalia o código usando o ChatGPT
-    rating, comment = evaluate_code(code)
-    # Adiciona um comentário ao pull request com a avaliação e os comentários do ChatGPT
-    add_comment(pr_url, f"**Rating:** {rating}\n\n{comment}")
+  get_review()

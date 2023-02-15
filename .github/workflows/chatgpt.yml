@@ -1,15 +1,34 @@
-name: ChatGPT Review
+name: Review PR with OpenAI GPT model
 
-on: [pull_request]
-
+on:
+  issue_comment:
+    types: [created]
 
 jobs:
-  chatgpt-review:
-    name: ChatGPT Review
+  pr_commented:
+    if: |
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, 'openai')
+    name: Review PR
     runs-on: ubuntu-latest
     steps:
-    - uses: feiskyer/ChatGPT-Reviewer@v0.3
-      name: ChatGPT Review
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install
+        run: |
+          sudo apt-get update
+          python3 -m venv .env
+          source .env/bin/activate
+          python -m pip install -U pip
+          pip install -r requirements.txt
+      - name: Review PR and make comment
+        run: |
+          source .env/bin/activate
+          echo "LINK=https://github.com/${{ github.repository }}/pull/${{ github.event.issue.number }}" >> $GITHUB_ENV
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{ github.token }}" >> $GITHUB_ENV
+          echo "GITHUB_ACTOR=${{ github.actor }}" >> $GITHUB_ENV
+          python chatgpt.py
