@@ -1,21 +1,23 @@
-on: [pull_request]
-
-name: ChatGPT CodeReview
+on:
+  pull_request:
+    types: [opened, synchronize]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  CHATGPT_SESSION_TOKEN: ${{ secrets.CHATGPT_SESSION_TOKEN }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
 jobs:
-  chatgpt_comment:
+  hello_world_job:
     runs-on: ubuntu-latest
-    name: Let chatgpt comment on your PR.
+    name: ChatGPT explain code
     steps:
-      - name: ChatGPT comment
-        uses: kxxt/chatgpt-action@v0.3
-        id: chatgpt
+      - name: ChatGTP explain code
+        uses: cirolini/chatgpt-github-actions@v1.3
         with:
-          number: ${{ github.event.pull_request.number }}
-          sessionToken: "$CHATGPT_SESSION_TOKEN"
-          split: 'yolo'  # Use true to enable the unstable split feature.
-        
+          openai_api_key: ${OPENAI_API_KEY}
+          github_token: ${GITHUB_TOKEN}
+          github_pr_id: ${{ github.event.number }}
+          openai_engine: "text-davinci-002" #optional
+          openai_temperature: 0.5 #optional
+          openai_max_tokens: 2048 #optional
+          mode: file # file or patch 
